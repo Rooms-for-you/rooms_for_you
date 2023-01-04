@@ -3,7 +3,6 @@ from django.db import models
 
 import uuid
 
-
 class User(AbstractUser):
     id = models.UUIDField(
         default=uuid.uuid4,
@@ -17,3 +16,4 @@ class User(AbstractUser):
     is_legal = models.BooleanField(default=False, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
