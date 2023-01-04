@@ -6,4 +6,4 @@ class AddressSerializer(serializers.ModelSerializer):
         model = Address
         fields = ['id', 'street', 'number', 'city']
 
-    ...
+    
