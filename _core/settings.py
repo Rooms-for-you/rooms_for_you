@@ -46,7 +46,7 @@ THIRD_PARTY_APPS = [
 
 MY_APPS = [
     "users",
-    "addresses",
+    "adresses",
     "hotels",
     "rooms",
     "services"
