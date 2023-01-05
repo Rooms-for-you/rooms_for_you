@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from .models import Hotel
-from adresses.seralizers import AddressSerializer
+from adresses import seralizers
 from adresses.models import Address
 import ipdb
 
 class HotelSerializer(serializers.ModelSerializer):
-    address = AddressSerializer()
+    address = seralizers.AddressSerializer()
 
     class Meta:
         model = Hotel

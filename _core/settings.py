@@ -46,7 +46,7 @@ THIRD_PARTY_APPS = [
 
 MY_APPS = [
     "users",
-    "addresses",
+    "adresses",
     "hotels",
     "rooms",
     "services"
@@ -117,6 +117,12 @@ AUTH_PASSWORD_VALIDATORS = [
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=24),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+      'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 # Internationalization
