@@ -5,8 +5,8 @@ from services.serializers import ServiceSerializer
 
 class RoomSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    number = serializers.IntegerField(max_length=10)
-    beds = serializers.IntegerField(max_length=1)
+    number = serializers.IntegerField()
+    beds = serializers.IntegerField()
     ranking = serializers.CharField(max_length=255)
     
     services = ServiceSerializer(many=True)

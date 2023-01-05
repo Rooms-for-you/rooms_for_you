@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from rest_framework.validators import UniqueValidator
-from .models import User
+from .models import User, Reservations_users_rooms
+from rooms.serializers import RoomSerializer
+import ipdb
 
 
 class UserSerializer(ModelSerializer):
@@ -54,3 +56,11 @@ class UserSerializer(ModelSerializer):
         instance.save()
 
         return instance
+
+class Reservations_users_rooms_Serializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    
+    class Meta:
+        model = Reservations_users_rooms
+        fields = ["id", "user", "room", "checkin_date", "checkout_date"]
+        read_only_fields = ["created_at", "updated_at", "user"]

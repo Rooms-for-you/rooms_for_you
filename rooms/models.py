@@ -10,3 +10,5 @@ class Room(models.Model):
         related_name="Rooms",
         default=None
     )
+
+    room_reservations = models.ManyToManyField("users.User", through="users.Reservations_users_rooms", related_name="user_reservations")
