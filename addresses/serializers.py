@@ -1,7 +1,9 @@
 from rest_framework import serializers
+from .models import Address
 
-class AddressSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    street = serializers.CharField(max_length=255)
-    number = serializers.IntegerField(max_length=10)
-    cep = serializers.IntegerField(max_length=10)
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ['id', 'street', 'number', 'city']
+
+    
