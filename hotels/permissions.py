@@ -7,11 +7,12 @@ class IsLegalOrAdmin(permissions.BasePermission):
     def has_permission(self, request: Request, view: View) -> bool:
 
         if request.method in permissions.SAFE_METHODS:
-            if request.user.is_authenticated:
-                if request.user.is_superuser:
-                    return True
-                elif request.user.is_legal:
-                    return True
+            return True
+        if request.user.is_authenticated:
+            if request.user.is_superuser:
+                return True
+            elif request.user.is_legal:
+                return True
     
 
 

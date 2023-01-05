@@ -59,8 +59,9 @@ class UserSerializer(ModelSerializer):
 
 class Reservations_users_rooms_Serializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    
+    room = RoomSerializer(read_only=True)
+
     class Meta:
-        model = Reservations_users_rooms
+        model = Reservations_users_rooms    
         fields = ["id", "user", "room", "checkin_date", "checkout_date"]
         read_only_fields = ["created_at", "updated_at", "user"]

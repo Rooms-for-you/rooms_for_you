@@ -2,10 +2,10 @@ from .models import User, Reservations_users_rooms
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import UserSerializer, Reservations_users_rooms_Serializer
 from .permissions import IsAccountOwner, IsAdminOrReadOnly
-from rest_framework import generics
+from rest_framework import generics, status
 import ipdb
 from rooms.models import Room
-from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
 
 
 class UserView(generics.ListCreateAPIView):
@@ -34,6 +34,23 @@ class ReservationsView(generics.ListCreateAPIView):
     permission_classes = []
 
     serializer_class = Reservations_users_rooms_Serializer
+
+    def perform_create(self, serializer):
+
+        room_obj = get_object_or_404(Room, id=self.request.data['room'])
+
+        checkin = self.request.data["checkin_date"]
+
+        checkout = self.request.data["checkout_date"]
+
+        reservation = Reservations_users_rooms.objects.filter(room=room_obj, checkin_date__range=[checkin, checkout], checkout_date__range=[checkin, checkout]).exists()
+
+        if reservation:
+            
+            #VER COM O ALEX ^^
+            ...
+
+        serializer.save(user=self.request.user, room=room_obj)
 
     def get_queryset(self):
         queryset = Reservations_users_rooms.objects.filter(user=self.request.user)
