@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Hotel
-from adresses import seralizers
-from adresses.models import Address
+from addresses import seralizers
+from addresses.models import Address
 import ipdb
 
 class HotelSerializer(serializers.ModelSerializer):
