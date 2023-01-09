@@ -6,6 +6,7 @@ from rest_framework import generics, status
 import ipdb
 from rooms.models import Room
 from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import ValidationError
 
 
 class UserView(generics.ListCreateAPIView):
@@ -46,9 +47,7 @@ class ReservationsView(generics.ListCreateAPIView):
         reservation = Reservations_users_rooms.objects.filter(room=room_obj, checkin_date__range=[checkin, checkout], checkout_date__range=[checkin, checkout]).exists()
 
         if reservation:
-            
-            #VER COM O ALEX ^^
-            ...
+            raise ValidationError({"detail": "room not available"}, status.HTTP_400_BAD_REQUEST)
 
         serializer.save(user=self.request.user, room=room_obj)
 
