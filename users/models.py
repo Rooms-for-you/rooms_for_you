@@ -18,7 +18,7 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    reservations = models.ManyToManyField("rooms.Room", through="Reservations_users_rooms")
+    reservations = models.ManyToManyField("rooms.Room", through="users.Reservations_users_rooms", related_name="reservations")
 
 
 class Reservations_users_rooms(models.Model):
