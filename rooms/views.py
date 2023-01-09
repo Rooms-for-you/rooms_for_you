@@ -23,7 +23,7 @@ class RoomView(generics.ListCreateAPIView, PageNumberPagination):
 
 class RoomDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAccountOwner]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     serializer_class = RoomSerializer
     queryset = Room.objects.all()

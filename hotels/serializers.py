@@ -8,7 +8,7 @@ import ipdb
 
 class HotelSerializer(serializers.ModelSerializer):
     address = seralizers.AddressSerializer()
-    feedbacks = FeedbackSerializer(many=True)
+    feedbacks = FeedbackSerializer(many=True, read_only=True)
 
     class Meta:
         model = Hotel
