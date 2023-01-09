@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Feedback",
+            name="Address",
             fields=[
                 (
                     "id",
@@ -22,21 +22,10 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                (
-                    "rating",
-                    models.CharField(
-                        choices=[
-                            (0, "Péssimo"),
-                            (1, "Ruim"),
-                            (2, "Regular"),
-                            (3, "Bom"),
-                            (4, "Muito Bom"),
-                            (5, "Excelente"),
-                        ],
-                        default=5,
-                        max_length=12,
-                    ),
-                ),
+                ("street", models.CharField(max_length=255)),
+                ("number", models.IntegerField()),
+                ("city", models.CharField(max_length=255)),
+                ("cep", models.CharField(max_length=9)),
             ],
         ),
     ]

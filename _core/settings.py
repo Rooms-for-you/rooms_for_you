@@ -59,6 +59,7 @@ MY_APPS = [
     "rooms",
     "services",
     "feedbacks",
+    "dj_database_url",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
