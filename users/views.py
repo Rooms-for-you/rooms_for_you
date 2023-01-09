@@ -38,16 +38,22 @@ class ReservationsView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
 
-        room_obj = get_object_or_404(Room, id=self.request.data['room'])
+        room_obj = get_object_or_404(Room, id=self.request.data["room"])
 
         checkin = self.request.data["checkin_date"]
 
         checkout = self.request.data["checkout_date"]
 
-        reservation = Reservations_users_rooms.objects.filter(room=room_obj, checkin_date__range=[checkin, checkout], checkout_date__range=[checkin, checkout]).exists()
+        reservation = Reservations_users_rooms.objects.filter(
+            room=room_obj,
+            checkin_date__range=[checkin, checkout],
+            checkout_date__range=[checkin, checkout],
+        ).exists()
 
         if reservation:
-            raise ValidationError({"detail": "room not available"}, status.HTTP_400_BAD_REQUEST)
+            raise ValidationError(
+                {"detail": "room not available"}, status.HTTP_400_BAD_REQUEST
+            )
 
         serializer.save(user=self.request.user, room=room_obj)
 

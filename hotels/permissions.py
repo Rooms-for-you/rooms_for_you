@@ -13,7 +13,6 @@ class IsLegalOrAdmin(permissions.BasePermission):
                 return True
             elif request.user.is_legal:
                 return True
-    
 
 
 class IsAccountOwner(permissions.BasePermission):
