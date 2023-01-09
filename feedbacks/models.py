@@ -14,7 +14,11 @@ class Feedback(models.Model):
     rating = models.CharField(
         max_length=12,
         choices=Rating.choices,
-        default=Rating.EXCELENTE,
+    )
+
+    description = models.CharField(
+        max_length=256,
+        null=True,
     )
 
     hotel = models.ForeignKey(
