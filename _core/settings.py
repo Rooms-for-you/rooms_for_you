@@ -58,6 +58,7 @@ MY_APPS = [
     "hotels",
     "rooms",
     "services",
+    "feedbacks",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS

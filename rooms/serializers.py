@@ -2,13 +2,15 @@ from rest_framework import serializers
 from rooms.models import Room
 from services.models import Service
 from services.serializers import ServiceSerializer
+from hotels.serializers import HotelSerializer
+import ipdb
 
 class RoomSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    number = serializers.IntegerField(max_length=10)
-    beds = serializers.IntegerField(max_length=1)
+    number = serializers.IntegerField()
+    beds = serializers.IntegerField()
     ranking = serializers.CharField(max_length=255)
-    
+    hotel = HotelSerializer(read_only=True)
     services = ServiceSerializer(many=True)
 
     def create(self, validated_data: dict) -> Room:
