@@ -12,7 +12,7 @@ class HotelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Hotel
-        fields = ["id", "owner", "address", "feedbacks"]
+        fields = ["id","name", "owner", "address", "feedbacks"]
         read_only_fields = ["owner", "feedbacks"]
 
     def create(self, validated_data):
