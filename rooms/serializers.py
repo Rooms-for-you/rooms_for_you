@@ -36,10 +36,12 @@ class RoomSerializer(serializers.Serializer):
 
             if not str(data.year) in unavailable_days: 
                 unavailable_days.update({str(data.year):{}})
-                for i in range(12):
-                    unavailable_days[str(data.year)].update({i + 1: []})
+                
+            if not str(data.month) in unavailable_days[str(data.year)]:
+                unavailable_days[str(data.year)].update({str(data.month): []})
 
-            unavailable_days[str(data.year)][data.month].append(data.day)
+            if str(data.year) in unavailable_days and str(data.month) in unavailable_days[str(data.year)]:
+                unavailable_days[str(data.year)][str(data.month)].append(data.day)
             
 
         return unavailable_days
