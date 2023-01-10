@@ -63,7 +63,7 @@ class ReservationsView(generics.ListCreateAPIView):
         return queryset
 
 
-class ReservationsDetailView(generics.RetrieveDestroyAPIView):
+class ReservationsDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Reservations_users_rooms.objects.all()
     permission_classes = []
 
