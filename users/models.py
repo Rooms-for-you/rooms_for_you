@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 import uuid
 
@@ -17,3 +18,13 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    reservations = models.ManyToManyField("rooms.Room", through="users.Reservations_users_rooms", related_name="reservations")
+
+
+class Reservations_users_rooms(models.Model):
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    room = models.ForeignKey("rooms.Room", on_delete=models.CASCADE)
+    checkin_date = models.DateField()
+    checkout_date = models.DateField()
+    created_at= models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

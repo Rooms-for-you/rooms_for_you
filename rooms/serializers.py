@@ -2,14 +2,50 @@ from rest_framework import serializers
 from rooms.models import Room
 from services.models import Service
 from services.serializers import ServiceSerializer
+from hotels.serializers import HotelSerializer
+from datetime import date, timedelta
+import ipdb
 
 class RoomSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    number = serializers.IntegerField(max_length=10)
-    beds = serializers.IntegerField(max_length=1)
+    number = serializers.IntegerField()
+    beds = serializers.IntegerField()
     ranking = serializers.CharField(max_length=255)
-    
+    hotel = HotelSerializer(read_only=True)
     services = ServiceSerializer(many=True)
+    unavailable_days = serializers.SerializerMethodField()
+
+    def get_unavailable_days(self, obj:dict):
+
+        unavailable_days = {}
+
+        lista_datas = []
+
+        for reservation in obj.reservations_users_rooms_set.all():
+
+            checkin = reservation.checkin_date
+            checkout = reservation.checkout_date
+            
+            delta = checkout - checkin
+
+            for i in range(delta.days + 1):
+                day = checkin + timedelta(days=i)
+                lista_datas.append(day)
+
+        for data in lista_datas:
+
+            if not str(data.year) in unavailable_days: 
+                unavailable_days.update({str(data.year):{}})
+                
+            if not str(data.month) in unavailable_days[str(data.year)]:
+                unavailable_days[str(data.year)].update({str(data.month): []})
+
+            if str(data.year) in unavailable_days and str(data.month) in unavailable_days[str(data.year)]:
+                unavailable_days[str(data.year)][str(data.month)].append(data.day)
+            
+
+        return unavailable_days
+
 
     def create(self, validated_data: dict) -> Room:
         services_list = validated_data.pop("services")
