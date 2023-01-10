@@ -10,7 +10,6 @@ import ipdb
 
 
 class ListCreateFeedback(generics.ListCreateAPIView):
-
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
 
@@ -18,6 +17,14 @@ class ListCreateFeedback(generics.ListCreateAPIView):
         hotel_id = self.kwargs["pk"]
         hotel = get_object_or_404(Hotel, pk=hotel_id)
         serializer.save(owner=self.request.user, hotel_id=hotel.id)
+
+    def get_queryset(self):
+        hotel_id = self.kwargs["pk"]
+        hotel = get_object_or_404(Hotel, pk=hotel_id)
+
+        queryset = Feedback.objects.filter(hotel=hotel)
+
+        return queryset
 
 
 class RetrieveFeedback(generics.RetrieveUpdateDestroyAPIView):
