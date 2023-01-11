@@ -14,7 +14,6 @@ class HotelSerializer(serializers.ModelSerializer):
         model = Hotel
         fields = ["id", "name", "owner", "address", "feedbacks", "rooms"]
         read_only_fields = ["owner", "feedbacks","rooms"]
-        depth = 2
 
     def create(self, validated_data):
         address_dict = validated_data.pop("address", None)
