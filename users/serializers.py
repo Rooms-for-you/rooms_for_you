@@ -4,6 +4,8 @@ from rest_framework.validators import UniqueValidator
 from .models import User, Reservations_users_rooms
 from rooms.serializers import RoomSerializer
 import ipdb
+from datetime import date
+from rooms.utils import get_dates_interval
 
 
 class UserSerializer(ModelSerializer):
