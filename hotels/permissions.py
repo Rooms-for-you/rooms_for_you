@@ -18,4 +18,4 @@ class IsLegalOrAdmin(permissions.BasePermission):
 class IsAccountOwner(permissions.BasePermission):
     def has_object_permission(self, request: Request, view: View, obj: User):
         if request.user.is_authenticated:
-            return obj == request.user or request.user.is_superuser
+            return obj.owner == request.user or request.user.is_superuser
