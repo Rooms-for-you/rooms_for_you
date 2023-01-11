@@ -27,7 +27,8 @@ class RoomView(generics.ListCreateAPIView, PageNumberPagination):
 
         queryset = Room.objects.filter(hotel=hotel)
 
-        return queryset
+        return queryset     
+
 
 class ListAllRoomView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
@@ -35,6 +36,7 @@ class ListAllRoomView(generics.ListAPIView):
 
     serializer_class = RoomSerializer
     queryset = Room.objects.all()
+
 
 class RoomDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]

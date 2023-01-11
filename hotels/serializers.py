@@ -34,12 +34,23 @@ class HotelSerializer(serializers.ModelSerializer):
     def update(self, instance: Hotel, validated_data: dict):
 
         address_dict: dict = validated_data.pop("address", None)
-        if address_obj:
-            address_obj, created = Address.objects.get_or_create(hotel=instance)
+        if address_dict:
+            address_obj = Address.objects.filter(hotel=instance).first()
 
             for key, value in address_dict.items():
                 setattr(address_obj, key, value)
+
+            already_exists = Address.objects.filter(
+            cep=address_obj.cep,
+            number=address_obj.number,
+            ).exists()
+
+            if already_exists:
+                raise ValidationError({"detail": "Address already been taken."})
+
             address_obj.save()
+
+            
 
         for key, value in validated_data.items():
             setattr(instance, key, value)
