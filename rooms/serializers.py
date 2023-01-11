@@ -34,6 +34,11 @@ class RoomSerializer(serializers.Serializer):
                 if not data.day in unavailable_days[str(data.year)][str(data.month)]:
                     unavailable_days[str(data.year)][str(data.month)].append(data.day)
                     unavailable_days[str(data.year)][str(data.month)] = sorted(unavailable_days[str(data.year)][str(data.month)])
+
+            keys = list(unavailable_days[str(data.year)].keys())    
+            sorted_keys = sorted(keys)
+            sorted_dict = {i: unavailable_days[str(data.year)][i] for i in sorted_keys}
+            unavailable_days[str(data.year)] = sorted_dict
             
 
         return unavailable_days
