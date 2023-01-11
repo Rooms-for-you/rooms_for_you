@@ -4,6 +4,7 @@ from services.models import Service
 from services.serializers import ServiceSerializer
 from hotels.serializers import HotelSerializer
 from datetime import date, timedelta
+from .utils import get_dates
 import ipdb
 
 class RoomSerializer(serializers.Serializer):
@@ -19,18 +20,7 @@ class RoomSerializer(serializers.Serializer):
 
         unavailable_days = {}
 
-        lista_datas = []
-
-        for reservation in obj.reservations_users_rooms_set.all():
-
-            checkin = reservation.checkin_date
-            checkout = reservation.checkout_date
-            
-            delta = checkout - checkin
-
-            for i in range(delta.days + 1):
-                day = checkin + timedelta(days=i)
-                lista_datas.append(day)
+        lista_datas = get_dates(obj.reservations_users_rooms_set.all())
 
         for data in lista_datas:
 
@@ -41,7 +31,14 @@ class RoomSerializer(serializers.Serializer):
                 unavailable_days[str(data.year)].update({str(data.month): []})
 
             if str(data.year) in unavailable_days and str(data.month) in unavailable_days[str(data.year)]:
-                unavailable_days[str(data.year)][str(data.month)].append(data.day)
+                if not data.day in unavailable_days[str(data.year)][str(data.month)]:
+                    unavailable_days[str(data.year)][str(data.month)].append(data.day)
+                    unavailable_days[str(data.year)][str(data.month)] = sorted(unavailable_days[str(data.year)][str(data.month)])
+
+            keys = list(unavailable_days[str(data.year)].keys())    
+            sorted_keys = sorted(keys)
+            sorted_dict = {i: unavailable_days[str(data.year)][i] for i in sorted_keys}
+            unavailable_days[str(data.year)] = sorted_dict
             
 
         return unavailable_days
