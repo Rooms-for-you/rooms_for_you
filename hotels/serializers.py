@@ -4,7 +4,6 @@ from addresses import seralizers
 from addresses.models import Address
 from feedbacks.serializers import FeedbackSerializer
 from rest_framework.exceptions import ValidationError
-import ipdb
 
 
 class HotelSerializer(serializers.ModelSerializer):
@@ -13,8 +12,9 @@ class HotelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Hotel
-        fields = ["id", "name", "owner", "address", "feedbacks"]
-        read_only_fields = ["owner", "feedbacks"]
+        fields = ["id", "name", "owner", "address", "feedbacks", "rooms"]
+        read_only_fields = ["owner", "feedbacks","rooms"]
+        depth = 2
 
     def create(self, validated_data):
         address_dict = validated_data.pop("address", None)
