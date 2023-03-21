@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 import uuid
 
+
 class User(AbstractUser):
     id = models.UUIDField(
         default=uuid.uuid4,
@@ -18,7 +19,11 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    reservations = models.ManyToManyField("rooms.Room", through="users.Reservations_users_rooms", related_name="reservations")
+    reservations = models.ManyToManyField(
+        "rooms.Room",
+        through="users.Reservations_users_rooms",
+        related_name="reservations",
+    )
 
 
 class Reservations_users_rooms(models.Model):
@@ -26,5 +31,5 @@ class Reservations_users_rooms(models.Model):
     room = models.ForeignKey("rooms.Room", on_delete=models.CASCADE)
     checkin_date = models.DateField()
     checkout_date = models.DateField()
-    created_at= models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
